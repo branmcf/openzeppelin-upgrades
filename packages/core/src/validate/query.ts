@@ -27,10 +27,13 @@ export function getContractVersion(runData: ValidationRunData, contractName: str
 }
 
 export function getContractNameAndRunValidation(data: ValidationData, version: Version): [string, ValidationRunData] {
+  console.log('FORKED getContractNameAndRunValidation...')
   const dataV3 = normalizeValidationData(data);
 
   let runValidation;
   let contractName;
+
+  console.log('V3 LOG: ', dataV3.log)
 
   for (const validation of dataV3.log) {
     contractName = Object.keys(validation).find(
@@ -41,6 +44,9 @@ export function getContractNameAndRunValidation(data: ValidationData, version: V
       break;
     }
   }
+
+  console.log('CONTRACT NAME: ', contractName)
+  console.log('RUN VALIDATION: ', runValidation)
 
   if (contractName === undefined || runValidation === undefined) {
     throw new Error('The requested contract was not found. Make sure the source code is available for compilation');
